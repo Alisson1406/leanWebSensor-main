@@ -3,10 +3,11 @@ const desligarButton = document.getElementById('desligarButton');
 const restartButton = document.getElementById('restartButton');
 const producaoDisplay = document.getElementById('producaoDisplay');
 const producaoMsg = document.getElementById('producaoMsg');
+const producaoerroc = document.getElementById('producaoerroc');
 
 var urlPost = 'https://leanwebsensor-main.onrender.com/chaves'
 var urlGet = 'https://leanwebsensor-main.onrender.com/producao'
-
+var erroc = 0
 function receiverRequest(){
     fetch(urlGet, {
         method: 'GET',
@@ -15,12 +16,29 @@ function receiverRequest(){
         }
     })
     .then(response => response.json())
-    .then(json => {
+    .then(json => 
         producaoDisplay.textContent = json.sensor;
         console.log(json.sensor);
         producaoMsg.textContent = json.msg;
         console.log(json.msg);
     })
+
+    if (ligarButton == 1){
+        erroc += 1
+
+        if (erroc > 5){
+            producaoerroc.textContent = json.erroc;
+        console.log(json.erroc);
+
+        }
+    }
+    
+    
+    
+
+        
+
+    }
 }
 
 setInterval(receiverRequest, 2000)  
