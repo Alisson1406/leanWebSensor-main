@@ -26,8 +26,8 @@ function receiverRequest(){
     if (ligarButton == 1){
         erroc += 1
 
-        if (erroc > 5){
-            producaoerroc.textContent = json.erroc;
+    if (erroc > 5){
+        producaoerroc.textContent = json.erroc;
         console.log(json.erroc);
 
         }
