@@ -2,12 +2,14 @@ const ligarButton = document.getElementById('ligarButton');
 const desligarButton = document.getElementById('desligarButton');
 const restartButton = document.getElementById('restartButton');
 const producaoDisplay = document.getElementById('producaoDisplay');
-const producaoMsg = document.getElementById('producaoMsg');
-const producaoerroc = document.getElementById('producaoerroc');
+const erro = document.getElementById('erro');
 
-var urlPost = 'https://leanwebsensor-main.onrender.com/chaves'
-var urlGet = 'https://leanwebsensor-main.onrender.com/producao'
-var erroc = 0
+var urlPost = 'https://leanwebsensorserver.onrender.com/chaves'
+var urlGet = 'https://leanwebsensorserver.onrender.com/producao'
+
+sensor_old = 0;
+contaErro = 0;
+
 function receiverRequest(){
     fetch(urlGet, {
         method: 'GET',
@@ -16,29 +18,24 @@ function receiverRequest(){
         }
     })
     .then(response => response.json())
-    .then(json => 
+    .then(json => {
         producaoDisplay.textContent = json.sensor;
         console.log(json.sensor);
-        producaoMsg.textContent = json.msg;
-        console.log(json.msg);
     })
-
-    if (ligarButton == 1){
-        erroc += 1
-
-    if (erroc > 5){
-        producaoerroc.textContent = json.erroc;
-        console.log(json.erroc);
-
+    if (json.msg == "Ligado"){
+        if (json.sensor == sensor_old)
+            contaErro = contaErro + 1;
+        else{
+            contaErro = 0;
+            sensor_old = json.sensor;
         }
+        if (contaErro >= 5)
+            erro.textContent = "ERRO DE ACIONAMENTO";
+        else
+            erro.textContent = "";
     }
-    
-    
-    
-
-        
-
-    }
+    else
+        erro.textContent = "";
 }
 
 setInterval(receiverRequest, 2000)  
