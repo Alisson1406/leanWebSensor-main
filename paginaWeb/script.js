@@ -4,6 +4,7 @@ const restartButton = document.getElementById('restartButton');
 const producaoDisplay = document.getElementById('producaoDisplay');
 const erro = document.getElementById('erro');
 
+
 var urlPost = 'https://leanwebsensorserver.onrender.com/chaves'
 var urlGet = 'https://leanwebsensorserver.onrender.com/producao'
 
